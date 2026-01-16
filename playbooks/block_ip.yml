@@ -1,0 +1,12 @@
+---
+- name: Block Malicious IP
+  hosts: localhost
+  connection: local
+  become: yes
+  tasks:
+    - name: Drop traffic from Target IP
+      iptables:
+        chain: INPUT
+        source: "{{ target_ip }}"
+        jump: DROP
+      when: target_ip is defined
